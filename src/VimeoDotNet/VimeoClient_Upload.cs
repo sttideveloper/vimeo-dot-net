@@ -152,17 +152,28 @@ namespace VimeoDotNet
         {
             try
             {
-                var param = new ParameterDictionary {{"type", "pull"}, {"link", link}};
+                var request = _apiRequestFactory.GetApiRequest(AccessToken);
+                request.ApiVersion = ApiVersions.v3_4;
+                request.Method = HttpMethod.Post;
+                request.Path = Endpoints.UploadTicket;
 
-                var request = _apiRequestFactory.AuthorizedRequest(
-                    AccessToken,
-                    HttpMethod.Post,
-                    Endpoints.UploadTicket,
-                    null,
-                    param
-                );
+
+                var parameters = new Dictionary<string, string>
+                {
+                    ["upload.approach"] = "pull",
+                    ["upload.link"] = link,
+                    ["privacy.embed"] = "private",
+                    ["privacy.download"] = "false",
+                    ["privacy.comments"] = "nobody",
+                    ["privacy.view"] = "unlisted",
+                };
+
+                
+                request.Body = new FormUrlEncodedContent(parameters);
 
                 return await ExecuteApiRequest<Video>(request).ConfigureAwait(false);
+                
+                
             }
             catch (Exception ex)
             {
@@ -173,6 +184,7 @@ namespace VimeoDotNet
 
                 throw new VimeoUploadException("Error generating upload ticket.", null, ex);
             }
+
         }
 
         /// <inheritdoc />
@@ -442,6 +454,10 @@ namespace VimeoDotNet
             var parameters = new Dictionary<string, string>
             {
                 ["upload.approach"] = "tus",
+                ["privacy.embed"] = "private",
+                ["privacy.download"] = "false",
+                ["privacy.comments"] = "nobody",
+                ["privacy.view"] = "unlisted",
                 ["upload.size"] = size.ToString()
             };
 
