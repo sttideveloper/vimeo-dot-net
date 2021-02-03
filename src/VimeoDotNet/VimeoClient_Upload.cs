@@ -148,7 +148,7 @@ namespace VimeoDotNet
         }
 
         /// <inheritdoc />
-        public async Task<Video> UploadPullLinkAsync(string link)
+        public async Task<Video> UploadPullLinkAsync(string link, string title, string description)
         {
             try
             {
@@ -166,6 +166,8 @@ namespace VimeoDotNet
                     ["privacy.download"] = "false",
                     ["privacy.comments"] = "nobody",
                     ["privacy.view"] = "unlisted",
+                    ["title"] = title,
+                    ["description"] = description
                 };
 
                 
