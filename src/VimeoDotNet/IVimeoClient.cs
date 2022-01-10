@@ -285,7 +285,7 @@ namespace VimeoDotNet
         /// Create new upload ticket asynchronously
         /// </summary>
         /// <returns>Upload ticket</returns>
-        Task<Video> UploadPullLinkAsync(string link, string title, string description);
+        Task<Video> UploadPullLinkAsync(string link, string title, string description, string meetingId = null);
 
         /// <summary>
         /// Upload and set thumbnail active
