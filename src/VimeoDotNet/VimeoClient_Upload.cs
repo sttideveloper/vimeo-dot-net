@@ -148,7 +148,7 @@ namespace VimeoDotNet
         }
 
         /// <inheritdoc />
-        public async Task<Video> UploadPullLinkAsync(string link, string title, string description)
+        public async Task<Video> UploadPullLinkAsync(string link, string title, string description, string parentFolderId = null)
         {
             try
             {
@@ -169,7 +169,10 @@ namespace VimeoDotNet
                     ["name"] = title,
                     ["description"] = description
                 };
-
+                if (parentFolderId != null)
+                {
+                    parameters.Add("parent_folder", parentFolderId);
+                }
                 
                 request.Body = new FormUrlEncodedContent(parameters);
 
