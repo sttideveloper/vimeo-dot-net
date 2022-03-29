@@ -487,7 +487,7 @@ namespace VimeoDotNet
 
             if (string.IsNullOrEmpty(name))
             {
-                name = DateTime.Now.ToString("yyyyMMdd-HH-mm-ss");
+                name = DateTime.UtcNow.ToString("yyyyMMdd-HH-mm-ss");
             }
 
             // Create the json string
