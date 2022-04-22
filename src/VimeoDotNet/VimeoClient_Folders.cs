@@ -13,7 +13,7 @@ namespace VimeoDotNet
 {
     public partial class VimeoClient
     {
-        public async Task<Folder> CreateVideoFolder(UserId userId, string name)
+        public async Task<Folder> CreateVideoFolder(UserId userId, string name, string parentFolderUri = null)
         {
             try
             {
@@ -42,6 +42,11 @@ namespace VimeoDotNet
                 {
                     ["name"] = name
                 };
+
+                if (parentFolderUri != null)
+                {
+                    parameters.Add("parent_folder_uri", parentFolderUri);
+                }
                 
                 request.Body = new FormUrlEncodedContent(parameters);
 

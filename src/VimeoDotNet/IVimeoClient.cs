@@ -260,7 +260,12 @@ namespace VimeoDotNet
         /// </summary>
         /// <returns>Upload ticket</returns>
         Task<TusResumableUploadTicket> GetTusReplaceResumableUploadTicketAsync(long size, long clipId, string name = null);
-        
+
+        /// <summary>
+        /// replace existing video using Pull approach
+        /// </summary>
+        /// <returns>Upload ticket</returns>
+        Task<Video> UploadPullReplaceAsync(string link, long clipId, double uploadByteSize);
 
         /// <summary>
         /// Create new upload ticket for replace video asynchronously
@@ -514,8 +519,9 @@ namespace VimeoDotNet
         /// </summary>
         /// <param name="userId">User ID</param>
         /// <param name="name">Name</param>
+        /// <param name="parentFolderUri">parentFolderUri</param>
         /// <returns>Tag</returns>
-        Task<Folder> CreateVideoFolder(UserId userId, string name);
+        Task<Folder> CreateVideoFolder(UserId userId, string name, string parentFolderUri = null);
 
         /// <summary>
         /// Get all folders by UserId and query and page parameters asynchronously

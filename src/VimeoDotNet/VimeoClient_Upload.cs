@@ -147,6 +147,50 @@ namespace VimeoDotNet
             return uploadRequest;
         }
 
+        public async Task<Video> UploadPullReplaceAsync(string link, long clipId, double uploadByteSize)
+        {
+            try
+            {
+                var request = _apiRequestFactory.GetApiRequest(AccessToken);
+                request.ApiVersion = ApiVersions.v3_4;
+                request.Method = HttpMethod.Post;
+                request.Path = Endpoints.VideoVersions;
+                request.UrlSegments.Add("clipId", clipId.ToString());
+
+                /*var parameters = new Dictionary<string, string>
+                {
+                    // file_name is the name of the version, so just timestamp it for now
+                    ["file_name"] = "Version-" + DateTime.UtcNow.ToFileTime(),
+                    ["upload.approach"] = "pull",
+                    ["upload.status"] = "in_progress",
+                    ["upload.size"] = uploadByteSize.ToString(),
+                    ["upload.link"] = link
+                };*/
+
+                // I never could get parameters to work right, so JSON!
+                string json = "{\"file_name\":\"Version -" + DateTime.UtcNow.ToFileTime() + "\"," +
+                              "\"upload\":{" +
+                              "\"approach\":\"pull\"," +
+                              "\"link\":\"" +  link + "\"," +
+                              "\"size\":" + uploadByteSize.ToString() +
+                              "}}";
+
+
+                request.Body = new StringContent(json, Encoding.UTF8, "application/json");
+
+                return await ExecuteApiRequest<Video>(request).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                if (ex is VimeoApiException)
+                {
+                    throw;
+                }
+
+                throw new VimeoUploadException("Error replacing video.", null, ex);
+            }
+        }
+
         /// <inheritdoc />
         public async Task<Video> UploadPullLinkAsync(string link, string title, string description, string parentFolderId = null)
         {
@@ -171,7 +215,7 @@ namespace VimeoDotNet
                 };
                 if (parentFolderId != null)
                 {
-                    parameters.Add("parent_folder", parentFolderId);
+                    parameters.Add("folder_uri", parentFolderId);
                 }
                 
                 request.Body = new FormUrlEncodedContent(parameters);
@@ -474,6 +518,8 @@ namespace VimeoDotNet
             request.Body = new FormUrlEncodedContent(parameters);
             return request;
         }
+
+
 
         private IApiRequest GenerateTusReplaceResumableUploadTicketRequest(long size, long clipId, string name = null)
         {
