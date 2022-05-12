@@ -63,5 +63,12 @@ namespace VimeoDotNet.Models
         [PublicAPI]
         [JsonProperty(PropertyName = "link")]
         public string Link { get; set; }
+
+        /// <summary>
+        /// Metadata
+        /// </summary>
+        [PublicAPI]
+        [JsonProperty(PropertyName = "metadata")]
+        public FolderMetadata Metadata { get; set; }
     }
 }
