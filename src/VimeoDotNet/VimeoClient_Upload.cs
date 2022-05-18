@@ -169,9 +169,12 @@ namespace VimeoDotNet
 
                 // I never could get parameters to work right, so JSON!
                 string json = "{\"file_name\":\"Version -" + DateTime.UtcNow.ToFileTime() + "\"," +
+                              "\"privacy\":{" +
+                              "\"embed\":\"public\"" +
+                              "}," +
                               "\"upload\":{" +
                               "\"approach\":\"pull\"," +
-                              "\"link\":\"" +  link + "\"," +
+                              "\"link\":\"" + link + "\"," +
                               "\"size\":" + uploadByteSize.ToString() +
                               "}}";
 
