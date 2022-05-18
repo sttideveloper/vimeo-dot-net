@@ -206,7 +206,7 @@ namespace VimeoDotNet
                 {
                     ["upload.approach"] = "pull",
                     ["upload.link"] = link,
-                    ["privacy.embed"] = "private",
+                    ["privacy.embed"] = "public",
                     ["privacy.download"] = "false",
                     ["privacy.comments"] = "nobody",
                     ["privacy.view"] = "unlisted",
@@ -503,7 +503,7 @@ namespace VimeoDotNet
             var parameters = new Dictionary<string, string>
             {
                 ["upload.approach"] = "tus",
-                ["privacy.embed"] = "private",
+                ["privacy.embed"] = "public",
                 ["privacy.download"] = "false",
                 ["privacy.comments"] = "nobody",
                 ["privacy.view"] = "unlisted",
