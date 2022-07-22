@@ -6,7 +6,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using VimeoDotNet.Constants;
+
 
 namespace VimeoDotNet.Net
 {
@@ -165,6 +167,11 @@ namespace VimeoDotNet.Net
             var request = PrepareRequest();
             var response = await Client.SendAsync(request).ConfigureAwait(false);
             var text = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            // hack to fix bad vimeo data
+            // ,"total":{}
+            text = text.Replace("total\":{}", "total\":0");
+
             return new ApiResponse<T>(response.StatusCode, response.Headers, text,
                 JsonConvert.DeserializeObject<T>(text, DateFormatSettings));
         }
