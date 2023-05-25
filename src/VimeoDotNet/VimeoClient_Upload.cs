@@ -204,6 +204,7 @@ namespace VimeoDotNet
                 request.Method = HttpMethod.Post;
                 request.Path = Endpoints.UploadTicket;
 
+                var truncatedTitle = title.Length <= 127 ? title : title.Substring(0, 127); 
 
                 var parameters = new Dictionary<string, string>
                 {
@@ -213,7 +214,7 @@ namespace VimeoDotNet
                     ["privacy.download"] = "false",
                     ["privacy.comments"] = "nobody",
                     ["privacy.view"] = "unlisted",
-                    ["name"] = title,
+                    ["name"] = truncatedTitle,
                     ["description"] = description
                 };
                 if (parentFolderId != null)
