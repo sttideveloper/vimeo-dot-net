@@ -16,12 +16,12 @@ namespace VimeoDotNet.Models
         [JsonProperty(PropertyName = "connections")]
         public UserConnections Connections { get; set; }
 
-        /// <summary>
-        /// Interactions
-        /// </summary>
-        [PublicAPI]
-        [JsonProperty(PropertyName = "interactions")]
-        public UserInteractions Interactions { get; set; }
+        // /// <summary>
+        // /// Interactions
+        // /// </summary>
+        // [PublicAPI]
+        // [JsonProperty(PropertyName = "interactions")]
+        // public UserInteractions Interactions { get; set; }
 
         /// <summary>
         /// Follower
